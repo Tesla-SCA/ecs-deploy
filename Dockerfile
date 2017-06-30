@@ -1,7 +1,7 @@
 FROM docker:17.06.0-ce-git
 
 # Install packges needed
-RUN apk --no-cache add ca-certificates curl bash jq
+RUN apk --no-cache add ca-certificates curl bash jq postgresql-dev
 
 RUN apk add --no-cache python3 && \
     python3 -m ensurepip && \
@@ -12,9 +12,5 @@ RUN apk add --no-cache python3 && \
 
 RUN pip install awscli docker-compose
 
-COPY ecs-deploy /ecs-deploy
-RUN chmod a+x /ecs-deploy
-
-COPY test.bats /test.bats
-COPY run-tests.sh /run-tests.sh
-RUN chmod a+x /run-tests.sh
+COPY ecs-deploy /usr/local/bin/ecs-deploy
+RUN chmod a+x /usr/local/bin/ecs-deploy
